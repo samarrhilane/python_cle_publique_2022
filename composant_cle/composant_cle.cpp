@@ -18,7 +18,7 @@ class Cle {
         
         std::string getPrivateKey() { 
          return PrivateKey; }
-		    std::string getPublicKey()  {
+	std::string getPublicKey()  {
          return PublicKey; }
         
  }
