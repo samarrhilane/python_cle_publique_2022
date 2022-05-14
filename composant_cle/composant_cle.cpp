@@ -48,6 +48,34 @@ char *binToHexString(char *out,const unsigned char *bin, size_t len)
     return out;
 }
 
+/*uECC_curve_private_key_size() function.
+Returns the size of a private key for the curve in bytes.
+*/
+//int uECC_curve_private_key_size(uECC_Curve curve);
+
+/* uECC_curve_public_key_size() function.
+Returns the size of a public key for the curve in bytes.
+*/
+//int uECC_curve_public_key_size(uECC_Curve curve);
+
+
+
+// Outputs:
+//     public_key  - Will be filled in with the public key. Must be at least 2 * the curve size
+//                   (in bytes) long. For example, if the curve is secp256r1, public_key must be 64
+//                   bytes long.
+//     private_key - Will be filled in with the private key. Must be as long as the curve order; this
+//                   is typically the same as the curve size, except for secp160r1. For example, if the
+//                   curve is secp256r1, private_key must be 32 bytes long.
+//                   For secp160r1, private_key must be 21 bytes long! Note that the first byte will
+//                   almost always be 0 (there is about a 1 in 2^80 chance of it being non-zero).
+
+
+
+//Returns 1 if the key pair was generated successfully, 0 if an error occurred.
+//int uECC_make_key(uint8_t *public_key, uint8_t *private_key, uECC_Curve curve);
+
+
 class Cle {
   
     private:
