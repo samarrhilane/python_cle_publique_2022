@@ -1,5 +1,4 @@
 #include <pybind11/pybind11.h>
-#include <stddef.h>
 #include <string>
 #include <stdexcept>
 #include "micro-ecc/uECC.h"
