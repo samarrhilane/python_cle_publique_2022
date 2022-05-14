@@ -88,8 +88,10 @@ class Cle {
 
         void initialize(std::string &Number) { 
 		std::string &output;
+		int Private_Key_Size = uECC_curve_private_key_size(uECC_Curve curve);
 		PrivateKey = hexStringToBin(output, Number);
 		std::string &output2;
+		int Public_Key_Size = uECC_curve_public_key_size(uECC_Curve curve);
 		PublicKey = binToHexString(output2, output, ?);
 		
 		
