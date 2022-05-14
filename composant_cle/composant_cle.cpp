@@ -83,15 +83,16 @@ class Cle {
         std::string PrivateKey;
   
     public:
-         Cle() {}
         ~Cle() {}
-
+	
         void initialize(std::string &Number) { 
+		const struct uECC_Curve_t *curve = uECC_secp256k1();
+		int Private_Key_Size = uECC_curve_private_key_size(curve);
+	        Unit_Private_Key = uint8_t l_secret1[Private_Key_Size];
 		std::string &output;
-		int Private_Key_Size = uECC_curve_private_key_size(uECC_Curve curve);
 		PrivateKey = hexStringToBin(output, Number);
 		std::string &output2;
-		int Public_Key_Size = uECC_curve_public_key_size(uECC_Curve curve);
+		int Public_Key_Size = uECC_curve_public_key_size(curve);
 		PublicKey = binToHexString(output2, output, ?);
 		
 		
