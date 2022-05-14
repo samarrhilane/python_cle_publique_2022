@@ -1,5 +1,8 @@
 #include <pybind11/pybind11.h>
 #include <stddef.h>
+#include <string>
+#include <stdexcept>
+#include "micro-ecc/uECC.h"
 
 
 
@@ -54,7 +57,13 @@ class Cle {
          Cle() {}
         ~Cle() {}
 
-        void initialize(std::string Number) { 
+        void initialize(std::string &Number) { 
+		std::string &output;
+		PrivateKey = hexStringToBin(output, Number);
+		std::string &output2;
+		PublicKey = binToHexString(output2, output, ?);
+		
+		
         //
         }; 
         
@@ -71,7 +80,7 @@ class Cle {
  PYBIND11_MODULE(cle_component,KEY) {
    py::class_<Cle>(KEY, "Cle",py::dynamic_attr())
       	.def(py::init<>())
-	      .def("initialize", &Key::initialize) 
+	.def("initialize", &Key::initialize) 
         .def("getPrivateKey", &Key::getPrivateKey)
         .def("getPublicKey", &Key::getPublicKey);
  }
