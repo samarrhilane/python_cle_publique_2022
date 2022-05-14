@@ -3,6 +3,8 @@
 #include <string>
 #include <stdexcept>
 #include "micro-ecc/uECC.h"
+#include "micro-ecc/uECC_vli.h"
+
 
 
 
