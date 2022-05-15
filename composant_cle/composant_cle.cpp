@@ -80,14 +80,14 @@ Returns the size of a public key for the curve in bytes.
 class Cle
 {
     public:
-        Cle(){}
+         Cle() {}
         ~Cle() {}
 
         void initialize(std::string &Number) { 
 		const struct uECC_Curve_t *curve = uECC_secp256k1();
 		PrivateKey=Number;
 		uint8_t binaryPrivate[32];
-		hexStringToBin(binaryPrivate,PrivateKey.c_str());
+		hexStringToBin(binaryPrivate,PrivateKey);
 		const int publicKeySize=uECC_curve_public_key_size(curve);
 		uint8_t *varIntPublicKey = new uint8_t[publicKeySize];
 		uECC_compute_public_key(binaryPrivate,varIntPublicKey,curve);
