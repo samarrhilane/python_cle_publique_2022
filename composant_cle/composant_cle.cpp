@@ -84,27 +84,27 @@ class Cle
         ~Cle() {}
 
         void initialize(std::string &Number) { 
-		const struct uECC_Curve_t *curve = uECC_secp256k1();
-		PrivateKey=Number;
-		uint8_t binaryPrivate[32];
-		hexStringToBin(binaryPrivate,PrivateKey);
-		const int publicKeySize=uECC_curve_public_key_size(curve);
-		uint8_t *varIntPublicKey = new uint8_t[publicKeySize];
-		uECC_compute_public_key(binaryPrivate,varIntPublicKey,curve);
-		char hexPublicKey[128];
-		binToHexString(hexPublicKey,varIntPublicKey,64);
-		PublicKey=std::string(hexPublicKey,128);
-		//PublicKey=std::string( varIntPublicKey, varIntPublicKey+publicKeySize );
+		const struct uECC_Curve_t *curve = uECC_secp256k1(); // create ECC type secp256k1 : elliptic curve used by Bitcoin
+		uint8_t Cle_Prive_Binaire[32]; // initilize array with 32 bits to save binary private key after converting frrom sstring
+		hexStringToBin(Cle_Prive_Binaire,Number.c_str()); // convert string entry private key to binary
+		const int Private_Key_Size = uECC_curve_private_key_size(curve); // get Private key size
+		const int Public_Key_Size=uECC_curve_public_key_size(curve); // get Public Key size
+		uint8_t *Public_Key_Var = new uint8_t[Public_Key_Size]; // Create new array with public key size to save public key after cumputing
+		uECC_compute_public_key(Cle_Prive_Binaire,Public_Key_Var,curve); // convert private key to public key
+		char hexPublicKey[128];// initilize array with 128 bits to save hexadecimal publuc key after converting frrom unsign int 
+		binToHexString(hexPublicKey,varIntPublicKey,64); // convert unsign int public key to hexadecimal 
+		Private_Key= Number; // Private Key is the entry value, with string type
+		Public_Key=std::string(hexPublicKey,128); // Convert Public key to string type
 		}
 		
         const std::string &getPrivateKey() const { 
-		return PrivateKey; }
+		return Private_Key; }
 	const std::string &getPublicKey() const { 
-		return PublicKey; }
+		return Public_Key; }
 
     private:
-        std::string PublicKey;
-        std::string PrivateKey;
+        std::string Private_Key;
+        std::string Public_Key;
 };
 
 // 		const struct uECC_Curve_t *curve = uECC_secp256k1(); // create ECC type secp256k1 : elliptic curve used by Bitcoin
@@ -123,8 +123,8 @@ class Cle
         
  namespace py = pybind11;
  
- PYBIND11_MODULE(composant_cle,greetings) {
-   py::class_<Cle>(greetings, "Cle",py::dynamic_attr())
+ PYBIND11_MODULE(composant_cle,Key) {
+   py::class_<Cle>(Key, "Cle",py::dynamic_attr())
       	.def(py::init<>())
 	.def("initialize", &Cle::initialize) 
         .def("getPrivateKey", &Cle::getPrivateKey)
