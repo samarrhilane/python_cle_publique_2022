@@ -6,7 +6,7 @@
 
 
 
-
+// Convert charactere to binary
 unsigned char hexchr2bin(const char hex)
 {
 	unsigned char result;
@@ -24,14 +24,14 @@ unsigned char hexchr2bin(const char hex)
 }
 
 
-
+// Convert String to binary
 void hexStringToBin(unsigned char *out,const char * hexPrivate) {
     for (int i=0; i<32; i++){
 	out[i] = hexchr2bin(hexPrivate[2*i])<<4 | hexchr2bin(hexPrivate[2*i+1]);
     }
 }
 
-
+//Convert binary to String 
 char *binToHexString(char *out,const unsigned char *bin, size_t len)
 {
     size_t  i;
@@ -83,17 +83,32 @@ class Cle {
         std::string PrivateKey;
   
     public:
+	 Cle() {}
         ~Cle() {}
 	
         void initialize(std::string &Number) { 
-		const struct uECC_Curve_t *curve = uECC_secp256k1();
-		int Private_Key_Size = uECC_curve_private_key_size(curve);
-	        Unit_Private_Key = uint8_t l_secret1[Private_Key_Size];
-		std::string &output;
-		PrivateKey = hexStringToBin(output, Number);
-		std::string &output2;
-		int Public_Key_Size = uECC_curve_public_key_size(curve);
-		PublicKey = binToHexString(output2, output, ?);
+// 		const struct uECC_Curve_t *curve = uECC_secp256k1(); // create ECC type secp256k1 : elliptic curve used by Bitcoin
+// 		uint8_t Private_Key[32];
+// 		int Private_Key_Size = uECC_curve_private_key_size(curve);
+// 	        Unit_Private_Key = uint8_t l_secret1[Private_Key_Size];
+// 		std::string &output;
+// 		PrivateKey = hexStringToBin(output, Number);
+// 		std::string &output2;
+// 		int Public_Key_Size = uECC_curve_public_key_size(curve);
+// 		PublicKey = binToHexString(output2, output, ?);
+		
+		
+		PrivateKey=Number;
+		uint8_t binaryPrivate[32];
+		hexStringToBin(binaryPrivate,PrivateKey.c_str());
+		const int publicKeySize=uECC_curve_public_key_size(uECC_secp256k1());
+		uint8_t *varIntPublicKey = new uint8_t[publicKeySize];
+		uECC_compute_public_key(binaryPrivate,varIntPublicKey,uECC_secp256k1());
+		char hexPublicKey[128];
+		binToHexString(hexPublicKey,varIntPublicKey,64);
+		PublicKey=std::string(hexPublicKey,128);
+		
+		}
 		
 		
         //
