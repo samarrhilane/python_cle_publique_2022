@@ -131,9 +131,9 @@ class Cle {
  PYBIND11_MODULE(composant_cle,greetings) {
    py::class_<Cle>(greetings, "Cle",py::dynamic_attr())
       	.def(py::init<>())
-	.def("initialize", &greetings::initialize) 
-        .def("getPrivateKey", &greetings::getPrivateKey)
-        .def("getPublicKey", &greetings::getPublicKey);
+	.def("initialize", &Cle::initialize) 
+        .def("getPrivateKey", &Cle::getPrivateKey)
+        .def("getPublicKey", &Cle::getPublicKey);
  }
      
 
