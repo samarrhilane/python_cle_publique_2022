@@ -79,6 +79,11 @@ Returns the size of a public key for the curve in bytes.
 
 class Cle
 {
+	
+    private:
+        std::string Private_Key;
+        std::string Public_Key;
+	
     public:
          Cle() {}
         ~Cle() {}
@@ -102,24 +107,8 @@ class Cle
 	const std::string &getPublicKey() const { 
 		return Public_Key; }
 
-    private:
-        std::string Private_Key;
-        std::string Public_Key;
 };
 
-// 		const struct uECC_Curve_t *curve = uECC_secp256k1(); // create ECC type secp256k1 : elliptic curve used by Bitcoin
-// 		int Private_Key_Size = uECC_curve_private_key_size(curve);
-// 		int Public_Key_Size = uECC_curve_public_key_size(curve);
-// 		uint8_t B_Private_Key[32];
-// 	        Unit_Private_Key = uint8_t l_secret1[Private_Key_Size];
-// 		std::string &output;
-// 		PrivateKey = hexStringToBin(output, Number);
-// 		std::string &output2;
-		
-// 		PublicKey = binToHexString(output2, output, ?);
-		
-		
-  
         
  namespace py = pybind11;
  
