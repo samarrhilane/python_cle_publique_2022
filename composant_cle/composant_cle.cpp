@@ -77,16 +77,35 @@ Returns the size of a public key for the curve in bytes.
 //Returns 1 if the key pair was generated successfully, 0 if an error occurred.
 //int uECC_make_key(uint8_t *public_key, uint8_t *private_key, uECC_Curve curve);*/
 
-
-class Cle {
-  
-    
-  
-   public:
-	 Cle() {}
+class Cle
+{
+    public:
+        Cle(){}
         ~Cle() {}
-	
-	void initialize(std::string &Number) { 
+
+        void initialize(std::string &Number) { 
+		PrivateKey=Number;
+		uint8_t binaryPrivate[32];
+		hexStringToBin(binaryPrivate,PrivateKey.c_str());
+		const int publicKeySize=uECC_curve_public_key_size(uECC_secp256k1());
+		uint8_t *varIntPublicKey = new uint8_t[publicKeySize];
+		uECC_compute_public_key(binaryPrivate,varIntPublicKey,uECC_secp256k1());
+		char hexPublicKey[128];
+		binToHexString(hexPublicKey,varIntPublicKey,64);
+		PublicKey=std::string(hexPublicKey,128);
+		//PublicKey=std::string( varIntPublicKey, varIntPublicKey+publicKeySize );
+		}
+		
+        const std::string &getPrivateKey() const { 
+		return PrivateKey; }
+	const std::string &getPublicKey() const { 
+		return PublicKey; }
+
+    private:
+        std::string PublicKey;
+        std::string PrivateKey;
+};
+
 // 		const struct uECC_Curve_t *curve = uECC_secp256k1(); // create ECC type secp256k1 : elliptic curve used by Bitcoin
 // 		int Private_Key_Size = uECC_curve_private_key_size(curve);
 // 		int Public_Key_Size = uECC_curve_public_key_size(curve);
@@ -99,32 +118,7 @@ class Cle {
 // 		PublicKey = binToHexString(output2, output, ?);
 		
 		
-		PrivateKey=Number;
-		uint8_t binaryPrivate[32];
-		hexStringToBin(binaryPrivate,PrivateKey.c_str());
-		const int publicKeySize=uECC_curve_public_key_size(uECC_secp256k1());
-		uint8_t *varIntPublicKey = new uint8_t[publicKeySize];
-		uECC_compute_public_key(binaryPrivate,varIntPublicKey,uECC_secp256k1());
-		char hexPublicKey[128];
-		binToHexString(hexPublicKey,varIntPublicKey,64);
-		PublicKey=std::string(hexPublicKey,128);
-		
-		}
-		
   
-        //
-        }; 
-        
-        std::string getPrivateKey() { 
-         return PrivateKey; }
-	std::string getPublicKey()  {
-         return PublicKey; }
-        
-   private:
-        std::string PublicKey;
-        std::string PrivateKey;	
- }
-        
         
  namespace py = pybind11;
  
