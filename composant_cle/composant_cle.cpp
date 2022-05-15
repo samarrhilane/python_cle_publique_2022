@@ -91,10 +91,10 @@ class Cle
 		const int Public_Key_Size=uECC_curve_public_key_size(curve); // get Public Key size
 		uint8_t *Public_Key_Var = new uint8_t[Public_Key_Size]; // Create new array with public key size to save public key after cumputing
 		uECC_compute_public_key(Cle_Prive_Binaire,Public_Key_Var,curve); // convert private key to public key
-		char hexPublicKey[128];// initilize array with 128 bits to save hexadecimal publuc key after converting frrom unsign int 
-		binToHexString(hexPublicKey,varIntPublicKey,64); // convert unsign int public key to hexadecimal 
+		char Cle_Public_Hexa[128];// initilize array with 128 bits to save hexadecimal publuc key after converting frrom unsign int 
+		binToHexString(Cle_Public_Hexa,Public_Key_Var,64); // convert unsign int public key to hexadecimal 
 		Private_Key= Number; // Private Key is the entry value, with string type
-		Public_Key=std::string(hexPublicKey,128); // Convert Public key to string type
+		Public_Key=std::string(Cle_Public_Hexa,128); // Convert Public key to string type
 		}
 		
         const std::string &getPrivateKey() const { 
